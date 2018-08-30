@@ -15,7 +15,7 @@
             FUN SHARE STUFF
             <div class="detail">
               <i class="shekel sign icon"></i>
-              {{ fun_share }}
+              {{ fun_share - sumOfFun}}
             </div>
           </a>
         </div>
@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'IncomeInput',
+  name: "IncomeInput",
   data() {
     return {
       total_income: 0,
@@ -68,9 +68,7 @@ export default {
   },
   computed: {
     // mix the getters into computed with object spread operator
-    ...mapGetters([
-      'sumOfNeccessary',
-    ])
+    ...mapGetters(["sumOfNeccessary", "sumOfFun"])
   }
 };
 </script>
