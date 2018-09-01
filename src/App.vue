@@ -2,7 +2,7 @@
   <div id="app" class="ui main center aligned container">
     <h1 class="ui center aligned header">ExpenseApp</h1>
     <a href="https://icons8.com">Icon pack by Icons8</a>
-    
+
     <IncomeInput />
 
     <ExpenseAddition />
@@ -15,7 +15,8 @@
         :header="exp.header"
         :price="exp.price"
         :desc="exp.desc"
-        :type="exp.type"/>
+        :type="exp.type"
+        :iconImg="exp.iconImg"/>
 
     </div>
   </div>

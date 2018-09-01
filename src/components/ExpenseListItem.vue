@@ -21,11 +21,9 @@
 <script>
 export default {
   name: "ExpenseListItem",
-  props: ["id", "header", "price", "desc", "type"],
+  props: ["id", "header", "price", "desc", "type", "iconImg"],
   data() {
-    return {
-      iconImg: "https://png.icons8.com/color/50/000000/" + this.desc + ".png"
-    };
+    return {};
   },
   watch: {},
   methods: {
