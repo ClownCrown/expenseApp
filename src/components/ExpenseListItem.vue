@@ -11,14 +11,17 @@
       <div class="extra details"> {{this.$store.state.expenseTypes[type].value}}</div>
     </div>
     
-    <div class="ui red tag  label" >
-      <i class="eraser icon" v-on:click="removeExpense(id)"></i>
-    </div>
-    
+    <button class="ui icon secondary button" v-on:click="removeExpense(id)">
+      <i class="eraser icon"></i>
+    </button>    
   </div>
 </template>
 
+
 <script>
+/**
+ * TODO: move everything to GRID layout
+ */
 export default {
   name: "ExpenseListItem",
   props: ["id", "header", "price", "desc", "type", "iconImg"],
