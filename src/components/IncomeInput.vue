@@ -1,41 +1,41 @@
 <template>
-<div class="ui three column stackable grid">
-      <div class="row">
-        <div class="sixteen wide column">
-          <div class="ui left icon input focus">
-            <i class="shekel sign icon"></i>
-            <input v-model="total_income" placeholder="totalIncome" type="number">
-          </div>
+<div class="ui three column stackable centered grid">
+      <div class="centered row">
+        <div class="ui left icon input focus">
+          <i class="shekel sign icon"></i>
+          <input v-model="total_income" placeholder="totalIncome" type="number">
         </div>
       </div>
 
-      <div class="row">
-        <div class="column">
-          <a class="ui label">
-            FUN SHARE STUFF
-            <div class="detail">
-              <i class="shekel sign icon"></i>
+      <div class="centered row">
+        <div class="ui statistics">
+          <div class="statistic">
+            <div class="value">
+              <img src="https://png.icons8.com/dotty/50/000000/shekel.png" class="ui circular inline image">
               {{ fun_share - sumOfFun}}
             </div>
-          </a>
-        </div>
-        <div class="column">
-          <a class="ui label">
-            INVESTMENT SHARE
-            <div class="detail">
-              <i class="shekel sign icon"></i>
+            <div class="label">
+              FUN SHARE STUFF
+            </div>
+          </div>
+          <div class="statistic">
+            <div class="value">
+              <img src="https://png.icons8.com/dotty/50/000000/shekel.png" class="ui circular inline image">
               {{ inveset_share }}
             </div>
-          </a>
-        </div>
-        <div class="column">
-          <a class="ui label">
-            NECCESSARY SHARE
-            <div class="detail">
-              <i class="shekel sign icon"></i>
+            <div class="label">
+              INVESTMENT SHARE
+            </div>
+          </div>
+          <div class="statistic">
+            <div class="value">
+              <img src="https://png.icons8.com/dotty/50/000000/shekel.png" class="ui circular inline image">
               {{ neccessary_share - sumOfNeccessary}}
             </div>
-          </a>
+            <div class="label">
+              NECCESSARY SHARE
+            </div>
+          </div>                    
         </div>
       </div>
     </div>

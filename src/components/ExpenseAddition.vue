@@ -92,7 +92,8 @@ export default {
     },
     addExpToList() {
       var expItemAdd = {
-        header: this.expItem.header,
+        //header: this.expItem.header,
+        header: "header demo",
         price: this.expItem.price,
         desc: this.expItem.desc,
         type: this.expItem.type,
