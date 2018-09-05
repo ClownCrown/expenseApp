@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import store from './store/store';
 import App from './App';
-import VModal from 'vue-js-modal'
+import VModal from 'vue-js-modal';
 
 Vue.config.productionTip = false;
 
@@ -11,6 +11,8 @@ Vue.use(VModal, {
   dialog: true,
   dynamic: true,
 })
+
+export const serverBus = new Vue();
 
 /* eslint-disable no-new */
 new Vue({

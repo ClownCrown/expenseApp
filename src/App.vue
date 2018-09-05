@@ -5,18 +5,13 @@
 
     <IncomeInput />
 
-    <ExpenseAddition />
+    <ExpenseAddition v-if="totalIncome > 0"/>
     
     <div class="ui centered cards">
       <ExpenseListItem 
         v-for="exp in expenseList"
         v-bind:key="exp.id"
-        :id="exp.id"
-        :header="exp.header"
-        :price="exp.price"
-        :desc="exp.desc"
-        :type="exp.type"
-        :iconImg="exp.iconImg"/>
+        :expProp="exp"/>
 
     </div>
   </div>
@@ -41,6 +36,10 @@ export default {
   computed: {
     expenseList() {
       return this.$store.state.expensesList;
+    },
+
+    totalIncome() {
+      return this.$store.state.totalIncome;
     }
   }
 };

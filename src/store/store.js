@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    totalIncome: 0,
     expenseTypes: [{
       id: 0,
       value: 'neccessary'
@@ -26,17 +27,20 @@ const store = new Vuex.Store({
 
   mutations: {
     addExpense(state, payload) {
+      payload.id = state.expensesList.length;
       state.expensesList.push(payload);
     },
     deleteExpense(state, payload) {
       state.expensesList.splice(payload, 1);
-      console.log(state.expensesList);
+    },
+    addTotalIncome(state, payload) {
+      state.totalIncome = payload;
+    },
+    updateExpense(state, payload) {
+      state.expensesList.splice(payload.id, 1, payload);
     }
   },
 
-  /**
-   * 
-   */
   getters: {
     sumOfNeccessary: state => {
       return state.expensesList.filter(exp => exp.type === state.expenseTypes[0].id)
@@ -50,6 +54,10 @@ const store = new Vuex.Store({
         .reduce(function (total, value) {
           return total + Number(value.price);
         }, 0);
+    },
+
+    getExpById: (state) => (id) => {
+      return state.expensesList.find(exp => exp.id === id);
     }
   }
 });
