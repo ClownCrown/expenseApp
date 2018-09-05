@@ -4,12 +4,12 @@
       <img class="right floated mini ui image" v-bind:src="iconImg" 
         onerror='this.onerror = null; this.src="https://png.icons8.com/material/50/000000/shopping-cart.png"'>
     
-      <a class="header">{{header}} - {{this.$store.state.expenseTypes[type].value}}</a>
+      <a class="header" style="text-transform: capitalize;"> {{desc}} {{header}}</a>
       <div class="meta"> 
         <span class="price">{{price}} shekels </span>
       </div>
       <div class="description">
-        {{desc}}
+        {{this.$store.state.expenseTypes[type].value}} - {{expDate}}
       </div>
     </div>
     
@@ -29,7 +29,7 @@
  */
 export default {
   name: "ExpenseListItem",
-  props: ["id", "header", "price", "desc", "type", "iconImg"],
+  props: ["id", "header", "price", "desc", "type", "iconImg", "expDate"],
   data() {
     return {};
   },

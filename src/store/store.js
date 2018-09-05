@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    totalIncome: 0,
     expenseTypes: [{
       id: 0,
       value: 'neccessary'
@@ -30,7 +31,9 @@ const store = new Vuex.Store({
     },
     deleteExpense(state, payload) {
       state.expensesList.splice(payload, 1);
-      console.log(state.expensesList);
+    },
+    addTotalIncome(state, payload) {
+      state.totalIncome = payload;
     }
   },
 

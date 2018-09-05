@@ -64,6 +64,7 @@ export default {
       this.fun_share = (this.total_income * 0.3).toFixed(2);
       this.inveset_share = (this.total_income * 0.2).toFixed(2);
       this.neccessary_share = (this.total_income * 0.5).toFixed(2);
+      this.$store.commit("addTotalIncome", this.total_income);
     }
   },
   computed: {
