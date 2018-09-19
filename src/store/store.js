@@ -58,6 +58,34 @@ const store = new Vuex.Store({
 
     getExpById: (state) => (id) => {
       return state.expensesList.find(exp => exp.id === id);
+    },
+
+    getDatesArray: state => {
+      let array = [];
+      let expList = state.expensesList;
+      for (let index in expList) {
+        if (array.length == 0)
+          array.push({
+            date: expList[index].date,
+            counter: 1
+          });
+        else {
+          for (let dateItem in array) {
+            if (
+              array[dateItem].date.year() === expList[index].date.year() &&
+              array[dateItem].date.month() === expList[index].date.month()
+            ) {
+              array[dateItem].counter++;
+            } else {
+              array.push({
+                date: expList[index].date,
+                counter: 1
+              });
+            }
+          }
+        }
+      }
+      return array;
     }
   }
 });

@@ -9,7 +9,7 @@
         <span class="price">{{exp.price}} shekels </span>
       </div>
       <div class="description">
-        {{this.$store.state.expenseTypes[exp.type].value}} - {{exp.date}}
+        {{this.$store.state.expenseTypes[exp.type].value}} - {{exp.date.format("D/M/YYYY, hh:mm")}}
       </div>
     </div>
     
@@ -24,9 +24,6 @@
 
 
 <script>
-/**
- * TODO: add edit option for expenseItem!
- */
 import { serverBus } from "../main.js";
 import Expense from "../expense";
 

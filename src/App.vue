@@ -5,6 +5,8 @@
 
     <IncomeInput />
 
+    <ButtonNavBar v-if="expenseList.length > 0"/>
+
     <ExpenseAddition v-if="totalIncome > 0"/>
     
     <div class="ui centered cards">
@@ -23,6 +25,7 @@ import IncomeInput from "./components/IncomeInput";
 import ExpenseAddition from "./components/ExpenseAddition";
 import ExpenseListItem from "./components/ExpenseListItem";
 import Expense from "./expense.js";
+import ButtonNavBar from "./components/ButtonNavBar";
 
 export default {
   name: "App",
@@ -30,7 +33,8 @@ export default {
     HelloWorld,
     IncomeInput,
     ExpenseAddition,
-    ExpenseListItem
+    ExpenseListItem,
+    ButtonNavBar
   },
 
   computed: {

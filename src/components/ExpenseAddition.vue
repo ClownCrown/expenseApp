@@ -112,7 +112,7 @@ export default {
           "https://png.icons8.com/color/50/000000/" +
           this.expItem.desc.toLowerCase() +
           ".png",
-        date: this.expItem.date
+        date: moment(this.expItem.date, "DD/MM/YYYY")
       };
       if (expId === -1) {
         this.$store.commit("addExpense", expItemAdd);
