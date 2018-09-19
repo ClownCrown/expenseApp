@@ -23,7 +23,7 @@
 
           <div class="field">
             <label>Date</label>
-            <masked-input v-model="expItem.date" placeholder="dd/MM/yyyy" :mask="{ pattern: '11/11/1111' }"/> 
+            <flat-pickr v-model="dateTemp" :config="config" ></flat-pickr>
           </div>
 
           <div class="field">
@@ -60,21 +60,28 @@
 <script>
 import { mapMutations } from "vuex";
 import Expense from "../expense";
-import MaskedInput from "vue-masked-input";
 import moment from "moment";
 import { serverBus } from "../main.js";
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
 
 export default {
   name: "ExpenseAddition",
   components: {
-    MaskedInput
+    flatPickr
   },
   data() {
     return {
       //expItem: { header: "test", price: 0, desc: "", type: "" },
       expItem: new Expense(),
       showModal: false,
-      hasError: false
+      hasError: false,
+      dateTemp: new Date(),
+      config: {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "d-m-Y"
+      }
     };
   },
   methods: {
@@ -92,11 +99,12 @@ export default {
         !this.expItem.desc ||
         !this.expItem.price ||
         typeof this.expItem.type == "undefined" ||
-        !moment(this.expItem.date, "DD/MM/YYYY", true).isValid()
+        !moment(this.dateTemp, "DD-MM-YYYY", true).isValid()
       ) {
         this.hasError = true;
       } else {
         this.hasError = false;
+        this.expItem.date = this.dateTemp;
         this.addExpToList(this.expItem.id);
         this.hide();
       }
@@ -112,18 +120,20 @@ export default {
           "https://png.icons8.com/color/50/000000/" +
           this.expItem.desc.toLowerCase() +
           ".png",
-        date: moment(this.expItem.date, "DD/MM/YYYY")
+        date: moment(this.expItem.date, "DD-MM-YYYY")
       };
       if (expId === -1) {
         this.$store.commit("addExpense", expItemAdd);
       } else {
         this.expItem.iconImg = expItemAdd.iconImg;
+        this.expItem.date = expItemAdd.date;
         this.$store.commit("updateExpense", this.expItem);
       }
     },
     beforeOpen(event) {
       serverBus.$on("expenseId", id => {
         this.expItem = this.$store.getters.getExpById(id);
+        this.dateTemp = this.expItem.date.toDate();
       });
 
       if (!event.params) {
