@@ -1,5 +1,5 @@
 <template>
-<div class="ui three column stackable centered grid">
+<div class="ui three column stackable center aligned grid">
       <div class="centered row">
         <div class="ui left icon input focus">
           <i class="shekel sign icon"></i>
@@ -8,32 +8,33 @@
       </div>
 
       <div class="centered row">
-        <div class="ui statistics">
+        <div class="ui small sixteen statistics" 
+              style="display: flex; justify-content: center; align-items: center; align-content: center;">
           <div class="statistic">
             <div class="value">
-              <img src="https://png.icons8.com/dotty/50/000000/shekel.png" class="ui circular inline image">
-              {{ fun_share - sumOfFun}}
+              <i class="shekel sign icon"></i>
+              {{ (fun_share - sumOfFun).toPrecision(4)}}
             </div>
             <div class="label">
-              FUN SHARE STUFF
+              FUN SHARE <br> STUFF
             </div>
           </div>
           <div class="statistic">
             <div class="value">
-              <img src="https://png.icons8.com/dotty/50/000000/shekel.png" class="ui circular inline image">
-              {{ inveset_share }}
+              <i class="shekel sign icon"></i>
+              {{ (Number(inveset_share)).toPrecision(4) }}
             </div>
             <div class="label">
-              INVESTMENT SHARE
+              INVESTMENT <br> SHARE
             </div>
           </div>
           <div class="statistic">
             <div class="value">
-              <img src="https://png.icons8.com/dotty/50/000000/shekel.png" class="ui circular inline image">
-              {{ neccessary_share - sumOfNeccessary}}
+              <i class="shekel sign icon"></i>
+              {{ (neccessary_share - sumOfNeccessary).toPrecision(4)}}
             </div>
             <div class="label">
-              NECCESSARY SHARE
+              NECCESSARY <br> SHARE
             </div>
           </div>                    
         </div>
