@@ -26,6 +26,7 @@ import ExpenseAddition from "./components/ExpenseAddition";
 import ExpenseListItem from "./components/ExpenseListItem";
 import Expense from "./expense.js";
 import ButtonNavBar from "./components/ButtonNavBar";
+import moment from "moment";
 
 export default {
   name: "App",
@@ -36,9 +37,32 @@ export default {
     ExpenseListItem,
     ButtonNavBar
   },
+  created() {
+    if (localStorage.getItem("expenseList")) {
+      console.log("found some list");
+      //console.log(localStorage.getItem("expenseList"));
+      let expListToInit = JSON.parse(localStorage.getItem("expenseList"));
+
+      expListToInit.forEach(function(exp) {
+        exp.date = moment(exp.date, "DD-MM-YYYY");
+      });
+
+      this.$store.state.expensesList = expListToInit;
+    } else {
+      swal({
+        title: "Error!",
+        text: "Didn't find any list in memory so lets start over!",
+        type: "error",
+        confirmButtonText: "Cool"
+      });
+    }
+  },
 
   computed: {
     expenseList() {
+      let parsed = JSON.stringify(this.$store.state.expensesList);
+      //console.log(parsed);
+      localStorage.setItem("expenseList", parsed);
       return this.$store.state.expensesList;
     },
 
