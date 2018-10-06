@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="ui main container center aligned">
+    <i class="big yellow question circle outline icon" style="position: fixed; top: 1%; left: 2%;" onclick="introJs().start();"></i>
+    
     <h1 class="ui center aligned header">ExpenseApp</h1>
     <a href="https://icons8.com">Icon pack by Icons8</a>
 
@@ -38,35 +40,46 @@ export default {
     ButtonNavBar
   },
   created() {
+    if (localStorage.getItem("totalIncome")) {
+      let incomeTemp = Number(localStorage.getItem("totalIncome"));
+
+      this.$store.state.totalIncome = incomeTemp;
+    }
+
     if (localStorage.getItem("expenseList")) {
-      console.log("found some list");
-      //console.log(localStorage.getItem("expenseList"));
+      console.log("found list in memory");
       let expListToInit = JSON.parse(localStorage.getItem("expenseList"));
 
       expListToInit.forEach(function(exp) {
-        exp.date = moment(exp.date, "DD-MM-YYYY");
+        var date = new Date(exp.date);
+        exp.date = moment(date, "DD-MM-YYYY");
       });
 
       this.$store.state.expensesList = expListToInit;
     } else {
       swal({
-        title: "Error!",
-        text: "Didn't find any list in memory so lets start over!",
-        type: "error",
-        confirmButtonText: "Cool"
+        title: "No list to be found ):",
+        text: "Lets start over!",
+        type: "warning",
+        confirmButtonText: "OK"
       });
     }
   },
-
+  mounted() {},
   computed: {
     expenseList() {
-      let parsed = JSON.stringify(this.$store.state.expensesList);
-      //console.log(parsed);
-      localStorage.setItem("expenseList", parsed);
+      if (this.$store.state.expensesList.length > 0) {
+        let parsed = JSON.stringify(this.$store.state.expensesList);
+        console.log(parsed);
+        localStorage.setItem("expenseList", parsed);
+      }
       return this.$store.state.expensesList;
     },
 
     totalIncome() {
+      if (this.$store.state.totalIncome > 0) {
+        localStorage.setItem("totalIncome", this.$store.state.totalIncome);
+      }
       return this.$store.state.totalIncome;
     }
   }

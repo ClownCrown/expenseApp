@@ -3,7 +3,8 @@
       <div class="centered row">
         <div class="ui left icon input focus">
           <i class="shekel sign icon"></i>
-          <input v-model="total_income" placeholder="totalIncome" type="number">
+          <input v-model="total_income" placeholder="totalIncome" type="number" 
+                data-step="1" data-intro="Enter your income here, mate!"/>
         </div>
       </div>
 
@@ -54,6 +55,10 @@ export default {
       inveset_share: 0,
       neccessary_share: 0
     };
+  },
+  mounted() {
+    if (this.$store.state.totalIncome > 0)
+      this.total_income = this.$store.state.totalIncome;
   },
   watch: {
     total_income: function() {
