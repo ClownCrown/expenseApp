@@ -4,7 +4,7 @@
       <img class="right floated mini ui image" v-bind:src="exp.iconImg" 
         onerror='this.onerror = null; this.src="https://png.icons8.com/material/50/000000/shopping-cart.png"'>
     
-      <a class="header" style="text-transform: capitalize;"> {{exp.desc}} {{exp.header}}</a>
+      <a class="header" style="text-transform: capitalize;"> {{exp.desc}}</a>
       <div class="meta"> 
         <span class="price">{{exp.price}} shekels </span>
       </div>

@@ -1,6 +1,19 @@
 <template>
   <div id="app" class="ui main container center aligned">
-    <i class="big yellow question circle outline icon" style="position: fixed; top: 1%; left: 2%;" onclick="introJs().start();"></i>
+    
+    <i class="big yellow question circle outline icon" 
+      style="position: fixed; top: 1%; left: 2%;"
+      onclick="introJs().start();" />
+      
+    <JsonExcel
+        :data   = "expenseList"
+        :fields = "jsonFields"
+        name = "exportHistory.xls"
+        title = "EXPORT HISTORY"
+        >
+        <i class="big green file excel circle outline icon" style="position: fixed; top: 10%; left: 2%;"></i>
+    </JsonExcel>
+    
     
     <h1 class="ui center aligned header">ExpenseApp</h1>
     <a href="https://icons8.com">Icon pack by Icons8</a>
@@ -29,15 +42,38 @@ import ExpenseListItem from "./components/ExpenseListItem";
 import Expense from "./expense.js";
 import ButtonNavBar from "./components/ButtonNavBar";
 import moment from "moment";
+import JsonExcel from "vue-json-excel";
 
 export default {
   name: "App",
+  data() {
+    return {
+      jsonFields: {
+        "Expense ID": "id",
+        Description: "desc",
+        Price: "price",
+        Type: {
+          field: "type",
+          callback: typeValue => {
+            return this.$store.state.expenseTypes[typeValue].value;
+          }
+        },
+        Date: {
+          field: "date",
+          callback: value => {
+            return value.format("D/M/YYYY");
+          }
+        }
+      }
+    };
+  },
   components: {
     HelloWorld,
     IncomeInput,
     ExpenseAddition,
     ExpenseListItem,
-    ButtonNavBar
+    ButtonNavBar,
+    JsonExcel
   },
   created() {
     if (localStorage.getItem("totalIncome")) {
