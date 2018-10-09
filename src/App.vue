@@ -8,8 +8,9 @@
     <JsonExcel
         :data   = "expenseList"
         :fields = "jsonFields"
-        name = "exportHistory.xls"
+        name  = "exportHistory.xls"
         title = "EXPORT HISTORY"
+        type  = "csv"
         >
         <i class="big green file excel circle outline icon" style="position: fixed; top: 10%; left: 2%;"></i>
     </JsonExcel>
