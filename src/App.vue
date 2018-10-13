@@ -4,16 +4,10 @@
     <i class="big yellow question circle outline icon" 
       style="position: fixed; top: 1%; left: 2%;"
       onclick="introJs().start();" />
-      
-    <JsonExcel
-        :data   = "expenseList"
-        :fields = "jsonFields"
-        name  = "exportHistory.xls"
-        title = "EXPORT HISTORY"
-        type  = "csv"
-        >
-        <i class="big green file excel circle outline icon" style="position: fixed; top: 10%; left: 2%;"></i>
-    </JsonExcel>
+
+    <i class="big green file excel circle outline icon" 
+        style="position: fixed; top: 10%; left: 2%;"
+        @click="exportExcel()"></i>
     
     
     <h1 class="ui center aligned header">ExpenseApp</h1>
@@ -43,7 +37,9 @@ import ExpenseListItem from "./components/ExpenseListItem";
 import Expense from "./expense.js";
 import ButtonNavBar from "./components/ButtonNavBar";
 import moment from "moment";
-import JsonExcel from "vue-json-excel";
+//import JsonExcel from "vue-json-excel";
+import XLSX from "xlsx";
+import Download from "downloadjs";
 
 export default {
   name: "App",
@@ -73,8 +69,7 @@ export default {
     IncomeInput,
     ExpenseAddition,
     ExpenseListItem,
-    ButtonNavBar,
-    JsonExcel
+    ButtonNavBar
   },
   created() {
     if (localStorage.getItem("totalIncome")) {
@@ -118,6 +113,61 @@ export default {
         localStorage.setItem("totalIncome", this.$store.state.totalIncome);
       }
       return this.$store.state.totalIncome;
+    }
+  },
+  methods: {
+    exportExcel() {
+      let wb = XLSX.utils.book_new();
+      wb.Props = {
+        Title: "Export History - " + new Date(),
+        Subject: "Test",
+        Author: "ExpenseManager",
+        CreatedDate: new Date()
+      };
+
+      wb.SheetNames.push("Month");
+
+      let expenseListForExcel = [];
+      for (let i = 0; i < this.$store.state.expensesList.length; i++) {
+        expenseListForExcel.push({
+          id: this.$store.state.expensesList[i].id,
+          Desc: this.$store.state.expensesList[i].desc,
+          Date: this.$store.state.expensesList[i].date.format("D/M/YYYY"),
+          Price: this.$store.state.expensesList[i].price,
+          "Expense type": this.$store.state.expenseTypes[
+            this.$store.state.expensesList[i].type
+          ].value
+        });
+      }
+
+      var ws = XLSX.utils.json_to_sheet(expenseListForExcel);
+      XLSX.utils.sheet_add_json(ws, [{}], {
+        //header: ["A", "B", "C", "D", "E", "F", "G"]//,
+        //skipHeader: true
+        //origin:
+      });
+      var wscols = [
+        { wch: 5 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 }
+      ];
+
+      ws["!cols"] = wscols;
+
+      wb.Sheets["Month"] = ws;
+      var wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
+
+      var buf = new ArrayBuffer(wbout.length); //convert s to arrayBuffer
+      var view = new Uint8Array(buf); //create uint8array as viewer
+      for (var i = 0; i < wbout.length; i++)
+        view[i] = wbout.charCodeAt(i) & 0xff; //convert to octet
+
+      saveAs(
+        new Blob([buf], { type: "application/octet-stream" }),
+        "History.xlsx"
+      );
     }
   }
 };
