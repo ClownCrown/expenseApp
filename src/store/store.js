@@ -31,7 +31,7 @@ const store = new Vuex.Store({
       state.expensesList.push(payload);
     },
     deleteExpense(state, payload) {
-      state.expensesList.splice(payload, 1);
+      state.expensesList.splice(payload.id, 1);
     },
     addTotalIncome(state, payload) {
       state.totalIncome = payload;
