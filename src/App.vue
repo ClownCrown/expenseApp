@@ -1,14 +1,15 @@
 <template>
   <div id="app" class="ui main container center aligned">
-    
-    <i class="big yellow question circle outline icon" 
-      style="position: fixed; top: 1%; left: 2%;"
-      onclick="introJs().start();" />
-
-    <i class="big green file excel circle outline icon" 
-        style="position: fixed; top: 10%; left: 2%;"
-        @click="exportExcel()"></i>
-    
+    <Slide noOverlay >
+      <a onclick="introJs().start();">
+        <i class="yellow question circle outline icon"/>
+        <span>Help</span>
+      </a>
+      <a @click="exportExcel()">
+        <i class="green file excel circle outline icon"/>
+        <span>Export to Excel sheet</span>
+      </a>
+    </Slide>
     
     <h1 class="ui center aligned header">ExpenseApp</h1>
     <a href="https://icons8.com">Icon pack by Icons8</a>
@@ -40,6 +41,7 @@ import moment from "moment";
 //import JsonExcel from "vue-json-excel";
 import XLSX from "xlsx";
 import Download from "downloadjs";
+import { Slide } from "vue-burger-menu";
 
 export default {
   name: "App",
@@ -69,7 +71,8 @@ export default {
     IncomeInput,
     ExpenseAddition,
     ExpenseListItem,
-    ButtonNavBar
+    ButtonNavBar,
+    Slide
   },
   created() {
     if (localStorage.getItem("totalIncome")) {
@@ -79,7 +82,7 @@ export default {
     }
 
     if (localStorage.getItem("expenseList")) {
-      console.log("found list in memory");
+      //console.log("found list in memory");
       let expListToInit = JSON.parse(localStorage.getItem("expenseList"));
 
       expListToInit.forEach(function(exp) {
@@ -102,7 +105,7 @@ export default {
     expenseList() {
       if (this.$store.state.expensesList.length > 0) {
         let parsed = JSON.stringify(this.$store.state.expensesList);
-        console.log(parsed);
+        //console.log(parsed);
         localStorage.setItem("expenseList", parsed);
       }
       return this.$store.state.expensesList;
@@ -146,6 +149,7 @@ export default {
         //skipHeader: true
         //origin:
       });
+
       var wscols = [
         { wch: 5 },
         { wch: 20 },
