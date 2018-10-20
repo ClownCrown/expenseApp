@@ -1,20 +1,20 @@
 <template>
   <div id="app" class="ui main grid container center aligned">
     <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
-      <div class="ui buttons">
+      <div class="ui buttons" style="min-height: 33.5px;">
         <button class="ui compact left floated button" @click="show = !show">
           <i class="list icon"></i>
           Menu
         </button>
-        <div v-show="show" class="or" data-text="->" style="max-height: 30px;"></div>
+        <div v-show="show" class="or" data-text="->" style="max-height: 33.5px;"></div>
         <transition name="fade">
           <div v-show="show">
-            <button class="ui button" onclick="introJs().start();" style="max-height: 30px;">
+            <button class="ui button" onclick="introJs().start();" style="max-height: 33.5px;">
               <i class="question yellow circle outline icon"></i>
               Help
             </button>
 
-            <button class="ui button" style="max-height: 30px;" 
+            <button class="ui button" style="max-height: 33.5px;" 
                 @click="exportExcel()">
               <i class="green file excel circle outline icon"/>
               Excel Export
