@@ -1,32 +1,45 @@
 <template>
-  <div id="app" class="ui main container center aligned">
-    <Slide noOverlay >
-      <a onclick="introJs().start();">
-        <i class="yellow question circle outline icon"/>
-        <span>Help</span>
-      </a>
-      <a @click="exportExcel()">
-        <i class="green file excel circle outline icon"/>
-        <span>Export to Excel sheet</span>
-      </a>
-    </Slide>
+  <div id="app" class="ui main grid container center aligned">
+    <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
+      <div class="ui buttons">
+        <button class="ui compact left floated button" @click="show = !show">
+          <i class="list icon"></i>
+          Menu
+        </button>
+        <div v-show="show" class="or" data-text="->" style="max-height: 30px;"></div>
+        <transition name="fade">
+          <div v-show="show">
+            <button class="ui button" onclick="introJs().start();" style="max-height: 30px;">
+              <i class="question yellow circle outline icon"></i>
+              Help
+            </button>
+
+            <button class="ui button" style="max-height: 30px;" 
+                @click="exportExcel()">
+              <i class="green file excel circle outline icon"/>
+              Excel Export
+            </button>
+          </div>
+        </transition>
+      </div>
+    </nav>
+
     
-    <h1 class="ui center aligned header">ExpenseApp</h1>
-    <a href="https://icons8.com">Icon pack by Icons8</a>
 
-    <IncomeInput />
+    <IncomeInput class="row"/>
 
-    <ButtonNavBar v-if="expenseList.length > 0"/>
+    <ButtonNavBar class="left aligned row" style="padding: 0px" v-if="expenseList.length > 0"/>
 
-    <ExpenseAddition v-if="totalIncome > 0"/>
+    <ExpenseAddition class="row" v-if="totalIncome > 0"/>
     
     <div class="ui centered cards">
       <ExpenseListItem 
         v-for="exp in expenseList"
         v-bind:key="exp.id"
         :expProp="exp"/>
-
     </div>
+
+    <a href="https://icons8.com" class="footer">Icon pack by Icons8</a>
   </div>
 </template>
 
@@ -38,15 +51,16 @@ import ExpenseListItem from "./components/ExpenseListItem";
 import Expense from "./expense.js";
 import ButtonNavBar from "./components/ButtonNavBar";
 import moment from "moment";
-//import JsonExcel from "vue-json-excel";
 import XLSX from "xlsx";
 import Download from "downloadjs";
 import { Slide } from "vue-burger-menu";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
   data() {
     return {
+      show: false,
       jsonFields: {
         "Expense ID": "id",
         Description: "desc",
@@ -107,6 +121,8 @@ export default {
         let parsed = JSON.stringify(this.$store.state.expensesList);
         //console.log(parsed);
         localStorage.setItem("expenseList", parsed);
+      } else {
+        localStorage.setItem("expenseList", []);
       }
       return this.$store.state.expensesList;
     },
@@ -116,7 +132,12 @@ export default {
         localStorage.setItem("totalIncome", this.$store.state.totalIncome);
       }
       return this.$store.state.totalIncome;
-    }
+    },
+
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      datesArray: "getDatesArray"
+    })
   },
   methods: {
     exportExcel() {
@@ -131,6 +152,7 @@ export default {
       wb.SheetNames.push("Month");
 
       let expenseListForExcel = [];
+      let excelSheetNamesDates = [];
       for (let i = 0; i < this.$store.state.expensesList.length; i++) {
         expenseListForExcel.push({
           id: this.$store.state.expensesList[i].id,
@@ -142,6 +164,9 @@ export default {
           ].value
         });
       }
+
+      // TODO: sort array of dates and match it to expenseList to create a unique sheet for every month
+      //this.getDatesArray;
 
       var ws = XLSX.utils.json_to_sheet(expenseListForExcel);
       XLSX.utils.sheet_add_json(ws, [{}], {
@@ -178,4 +203,21 @@ export default {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: grey;
+  color: black;
+  text-align: center;
+  opacity: 0.8;
+}
 </style>

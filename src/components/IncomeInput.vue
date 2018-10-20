@@ -8,7 +8,7 @@
         </div>
       </div>
 
-      <div class="centered row">
+      <div class="centered row" style="margin-top: 5%;">
         <div class="ui small sixteen statistics" 
               style="display: flex; justify-content: center; align-items: center; align-content: center;">
           <div class="statistic">
