@@ -13,16 +13,9 @@ const store = new Vuex.Store({
       id: 1,
       value: 'fun'
     }],
-    expensesList: [
-      // {
-      // id: 1,
-      // header: 'ds',
-      // price: 123,
-      // desc: 'asdsadd',
-      // type: 0,
-      // }, 
-    ],
+    expensesList: [],
     counter: 123,
+    dateFilter: null
   },
 
   mutations: {
@@ -38,6 +31,9 @@ const store = new Vuex.Store({
     },
     updateExpense(state, payload) {
       state.expensesList.splice(payload.id, 1, payload);
+    },
+    setDateFilter(state, payload) {
+      state.dateFilter = payload;
     }
   },
 
@@ -63,29 +59,36 @@ const store = new Vuex.Store({
     getDatesArray: state => {
       let array = [];
       let expList = state.expensesList;
+      let newIndex = 0
+
+      // Creates an array of dates from the expenseList
       for (let index in expList) {
-        if (array.length == 0)
-          array.push({
-            date: expList[index].date,
-            counter: 1
-          });
-        else {
-          for (let dateItem in array) {
-            if (
-              array[dateItem].date.year() === expList[index].date.year() &&
-              array[dateItem].date.month() === expList[index].date.month()
-            ) {
-              array[dateItem].counter++;
-            } else {
-              array.push({
-                date: expList[index].date,
-                counter: 1
-              });
-            }
-          }
+        array.push({
+          id: index,
+          date: expList[index].date,
+          counter: 0
+        });
+      }
+
+      let newArray = []
+
+      // Counting the duplicates dates
+      for (let index in array) {
+        let tempArray = array.filter(dateItem => dateItem.date.year() == array[index].date.year() &&
+          dateItem.date.month() == array[index].date.month())
+
+        array[index].counter = tempArray.length
+      }
+
+      // Removing the duplicates dates
+      for (let index in array) {
+        if (!newArray.some(dateItem => dateItem.date.year() == array[index].date.year() &&
+            dateItem.date.month() == array[index].date.month())) {
+          newArray.push(array[index])
         }
       }
-      return array;
+
+      return newArray;
     }
   }
 });

@@ -3,7 +3,7 @@
       <div class="centered row">
         <div class="ui left icon input focus">
           <i class="shekel sign icon"></i>
-          <input v-model="total_income" placeholder="totalIncome" type="number" 
+          <input v-model="total_income" placeholder="Enter monthly income" type="number" 
                 data-step="1" data-intro="Enter your income here, mate!"/>
         </div>
       </div>

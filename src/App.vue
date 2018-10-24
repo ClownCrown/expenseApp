@@ -1,5 +1,6 @@
 <template>
-  <div id="app" class="ui main grid container center aligned">
+  <div id="app">
+    <div class="ui main grid container center aligned">
     <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
       <div class="ui buttons" style="min-height: 33.5px;">
         <button class="ui compact left floated button" @click="show = !show">
@@ -38,7 +39,8 @@
         v-bind:key="exp.id"
         :expProp="exp"/>
     </div>
-
+    </div>
+    
     <a href="https://icons8.com" class="footer">Icon pack by Icons8</a>
   </div>
 </template>
@@ -124,7 +126,14 @@ export default {
       } else {
         localStorage.setItem("expenseList", []);
       }
-      return this.$store.state.expensesList;
+
+      if (this.$store.state.dateFilter != null)
+        return this.$store.state.expensesList.filter(
+          item =>
+            item.date.year() == this.$store.state.dateFilter.year() &&
+            item.date.month() == this.$store.state.dateFilter.month()
+        );
+      else return this.$store.state.expensesList;
     },
 
     totalIncome() {

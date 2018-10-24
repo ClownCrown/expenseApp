@@ -110,6 +110,7 @@ export default {
       }
     },
     addExpToList(expId = -1) {
+      let d = new Date();
       let expItemAdd = {
         //header: this.expItem.header,
         header: "header demo",
@@ -121,6 +122,9 @@ export default {
           this.expItem.desc.toLowerCase() +
           ".png",
         date: moment(this.expItem.date, "DD-MM-YYYY")
+          .hour(d.getHours())
+          .minute(d.getMinutes())
+          .second(d.getSeconds())
       };
       if (expId === -1) {
         this.$store.commit("addExpense", expItemAdd);
