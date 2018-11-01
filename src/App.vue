@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       <div class="ui vertical inverted left sidebar menu">
-        <a class="item" onclick="$('.ui.sidebar').sidebar({transition: 'overlay'}).sidebar('hide'); introJs().start();">
+        <a class="item" onclick="$('.ui.sidebar').sidebar({transition: 'overlay',mobileTransition: 'overlay'}).sidebar('hide'); introJs().start();">
           <i class="question yellow circle outline icon"></i>
             Help
         </a>
@@ -13,9 +13,9 @@
           About
         </a>
       </div>
-    <div class="ui main pusher grid container center aligned">        
+    <div class="ui main grid container center aligned pushable">        
       <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
-        <button class="ui compact left floated button" onclick="$('.ui.sidebar').sidebar({transition: 'overlay'}).sidebar('toggle');">
+        <button class="ui compact left floated button" onclick="$('.ui.sidebar').sidebar({transition: 'overlay',mobileTransition: 'overlay'}).sidebar('toggle');">
           <i class="list icon"></i>
           Menu
         </button>
@@ -145,7 +145,7 @@ export default {
   methods: {
     exportExcel() {
       $(".ui.sidebar")
-        .sidebar({ transition: "overlay" })
+        .sidebar({ transition: "overlay", mobileTransition: "overlay" })
         .sidebar("hide");
 
       let wb = XLSX.utils.book_new();
