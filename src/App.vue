@@ -1,31 +1,25 @@
 <template>
   <div id="app">
-    <div class="ui main grid container center aligned">
-    <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
-      <div class="ui buttons" style="min-height: 33.5px;">
-        <button class="ui compact left floated button" @click="show = !show">
+      <div class="ui vertical inverted left sidebar menu">
+        <a class="item" onclick="$('.ui.sidebar').sidebar({transition: 'overlay'}).sidebar('hide'); introJs().start();">
+          <i class="question yellow circle outline icon"></i>
+            Help
+        </a>
+        <a class="item" @click="exportExcel()">
+          <i class="green file excel circle outline icon"/>
+              Excel Export
+        </a>
+        <a class="item">
+          About
+        </a>
+      </div>
+    <div class="ui main pusher grid container center aligned">        
+      <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
+        <button class="ui compact left floated button" onclick="$('.ui.sidebar').sidebar({transition: 'overlay'}).sidebar('toggle');">
           <i class="list icon"></i>
           Menu
         </button>
-        <div v-show="show" class="or" data-text="->" style="max-height: 33.5px;"></div>
-        <transition name="fade">
-          <div v-show="show">
-            <button class="ui button" onclick="introJs().start();" style="max-height: 33.5px;">
-              <i class="question yellow circle outline icon"></i>
-              Help
-            </button>
-
-            <button class="ui button" style="max-height: 33.5px;" 
-                @click="exportExcel()">
-              <i class="green file excel circle outline icon"/>
-              Excel Export
-            </button>
-          </div>
-        </transition>
-      </div>
-    </nav>
-
-    
+      </nav>    
 
     <IncomeInput class="row"/>
 
@@ -150,6 +144,10 @@ export default {
   },
   methods: {
     exportExcel() {
+      $(".ui.sidebar")
+        .sidebar({ transition: "overlay" })
+        .sidebar("hide");
+
       let wb = XLSX.utils.book_new();
       wb.Props = {
         Title: "Export History - " + new Date(),
@@ -206,6 +204,7 @@ export default {
         new Blob([buf], { type: "application/octet-stream" }),
         "History.xlsx"
       );
+      swal.close();
     }
   }
 };
