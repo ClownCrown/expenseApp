@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
   <title>expenseManager</title>
   <script lang="javascript" src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
@@ -17,11 +18,22 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.min.css" />
 
 
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
   <div id="app"></div>
   <!-- built files will be auto injected -->
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        //navigator.serviceWorker.register('sw.js');
+        console.log("load event done")
+      });
+    }
+
+  </script>
 </body>
 
 </html>
