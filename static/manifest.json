@@ -1,0 +1,8 @@
+{
+  "name": "Expense Manager",
+  "short_name": "ExpenseMa",
+  "start_url": "index.html",
+  "display": "standalone",
+  "Theme_color": "#FFFF",
+  "background_color": "#fff"
+}
