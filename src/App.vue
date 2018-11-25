@@ -1,41 +1,49 @@
 <template>
   <div id="app">
-      <div class="ui vertical inverted left sidebar menu">
-        <a class="item" onclick="$('.ui.sidebar').sidebar({transition: 'overlay',mobileTransition: 'overlay'}).sidebar('hide'); introJs().start();">
-          <i class="question yellow circle outline icon"></i>
-            Help
-        </a>
-        <a class="item" @click="exportExcel()">
-          <i class="green file excel circle outline icon"/>
-              Excel Export
-        </a>
-        <a class="item">
-          About
-        </a>
+    <v-toolbar
+      absolute
+      color="teal lighten-3"
+      dark
+      :scroll-toolbar-off-screen="true"
+    >
+      <v-toolbar-title>Expense Manager</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+            <v-icon onclick="$('.ui.sidebar').sidebar({transition: 'overlay',mobileTransition: 'overlay'}).sidebar('hide'); introJs().start();"> 
+              help_outline 
+            </v-icon>
+      </v-btn>
+
+      <v-btn icon>
+            <v-icon @click="exportExcel()"> 
+              cloud_download 
+            </v-icon>
+      </v-btn>
+
+    </v-toolbar>
+  
+    <div id="appContent" class="ui main grid container center aligned" style="margin-top: 60px; margin-bottom: 60px;">        
+      <IncomeInput class="row"/>
+
+      <ButtonNavBar class="left aligned row" style="padding: 0px" v-if="expenseList.length > 0"/>
+
+      <ExpenseAddition class="row" v-if="totalIncome > 0"/>
+      
+      <div class="ui centered cards">
+        <ExpenseListItem 
+          v-for="exp in expenseList"
+          v-bind:key="exp.id"
+          :expProp="exp"/>
       </div>
-    <div class="ui main grid container center aligned pushable">        
-      <nav class="row" style="display: flow-root; margin-top: 2%; text-align: left;">
-        <button class="ui compact left floated button" onclick="$('.ui.sidebar').sidebar({transition: 'overlay',mobileTransition: 'overlay'}).sidebar('toggle');">
-          <i class="list icon"></i>
-          Menu
-        </button>
-      </nav>    
-
-    <IncomeInput class="row"/>
-
-    <ButtonNavBar class="left aligned row" style="padding: 0px" v-if="expenseList.length > 0"/>
-
-    <ExpenseAddition class="row" v-if="totalIncome > 0"/>
-    
-    <div class="ui centered cards">
-      <ExpenseListItem 
-        v-for="exp in expenseList"
-        v-bind:key="exp.id"
-        :expProp="exp"/>
     </div>
-    </div>
-    
-    <a href="https://icons8.com" class="footer">Icon pack by Icons8</a>
+
+    <v-footer class="p1" :fixed="true" height="auto">
+        <v-spacer></v-spacer>
+          <!--<a href="https://icons8.com" >Icon pack by Icons8</a> -->
+          <p class="text-xs-center">Icon pack by Icons8</p>
+    </v-footer>
   </div>
 </template>
 
@@ -49,7 +57,6 @@ import ButtonNavBar from "./components/ButtonNavBar";
 import moment from "moment";
 import XLSX from "xlsx";
 import Download from "downloadjs";
-import { Slide } from "vue-burger-menu";
 import { mapGetters } from "vuex";
 
 export default {
@@ -81,8 +88,7 @@ export default {
     IncomeInput,
     ExpenseAddition,
     ExpenseListItem,
-    ButtonNavBar,
-    Slide
+    ButtonNavBar
   },
   created() {
     if (localStorage.getItem("totalIncome")) {

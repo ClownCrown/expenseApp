@@ -1,11 +1,9 @@
 <template>
 <div class="ui three column stackable center aligned grid">
       <div class="centered row">
-        <div class="ui left icon input focus">
-          <i class="shekel sign icon"></i>
-          <input v-model="total_income" placeholder="Enter monthly income" type="number" 
-                data-step="1" data-intro="Enter your income here, mate!"/>
-        </div>
+        <v-text-field label="Monthly income" type="number" style="max-width: 50% !important;"
+          :value="total_income" prefix="$" data-intro="Enter your income here, mate!"/>
+
       </div>
 
       <div class="centered row" style="margin-top: 5%;">

@@ -4,6 +4,8 @@ import Vue from 'vue';
 import store from './store/store';
 import App from './App';
 import VModal from 'vue-js-modal';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
 
 Vue.config.productionTip = false;
 
@@ -13,6 +15,8 @@ Vue.use(VModal, {
 })
 
 export const serverBus = new Vue();
+
+Vue.use(Vuetify)
 
 /* eslint-disable no-new */
 new Vue({
